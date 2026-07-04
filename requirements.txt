@@ -1,0 +1,12 @@
+pandas
+numpy
+streamlit
+plotly
+SQLAlchemy
+PyMySQL
+python-dotenv
+langchain
+chromadb
+sentence-transformers
+pypdf
+groq
