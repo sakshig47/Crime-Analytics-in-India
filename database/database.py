@@ -15,7 +15,7 @@ engine = create_engine(
 print("Connected to MySQL Successfully!")
 
 # Read CSV File
-df = pd.read_csv("crime_dataset_india (1).csv")
+df = pd.read_csv("cleaned_crime_dataset.csv")
 
 print(df.head())
 
