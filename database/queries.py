@@ -2,9 +2,8 @@ import pandas as pd
 from database.database import engine
 
 
-# ==============================
 # KPI QUERIES
-# ==============================
+
 
 def total_crimes():
     query = "SELECT COUNT(*) AS total_crimes FROM crime_data;"
@@ -63,9 +62,9 @@ def average_days_to_close():
     return pd.read_sql(query, engine).iloc[0, 0]
 
 
-# ==============================
+
 # CHART DATA
-# ==============================
+
 
 def cases_closed_open():
     query = """
@@ -239,11 +238,11 @@ def open_cases_city():
 def monthly_crime_trend():
     query = """
     SELECT
-        DATE_FORMAT(date_of_occurrence,'%Y-%m') AS month,
+        DATE_FORMAT(date_of_occurrence,'%%Y-%%m') AS month,
         COUNT(*) AS total_cases
     FROM crime_data
-    GROUP BY month
-    ORDER BY month;
+    GROUP BY DATE_FORMAT(date_of_occurrence,'%%Y-%%m')
+    ORDER BY DATE_FORMAT(date_of_occurrence,'%%Y-%%m');
     """
     return pd.read_sql(query, engine)
 
