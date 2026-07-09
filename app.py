@@ -4,7 +4,11 @@ import pandas as pd
 # Import Components
 from Dashboard.sidebar import sidebar
 from Dashboard.kpi import show_kpis
+<<<<<<< HEAD
 from GenAI.chartbot import ask_ai
+=======
+from Dashboard.charts import show_charts
+>>>>>>> c2d5c258e34f8cbaaa9534bde7bafe96629c5f1b
 
 # ---------------------------------------------------
 # PAGE CONFIG
