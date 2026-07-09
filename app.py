@@ -4,6 +4,7 @@ import pandas as pd
 # Import Components
 from Dashboard.sidebar import sidebar
 from Dashboard.kpi import show_kpis
+from Dashboard.charts import show_charts
 
 # ---------------------------------------------------
 # PAGE CONFIG
