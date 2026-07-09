@@ -2,8 +2,8 @@ import streamlit as st
 import pandas as pd
 
 # Import Components
-from dashboard.sidebar import sidebar
-from dashboard.kpis import show_kpis
+from Dashboard.sidebar import sidebar
+from Dashboard.kpi import show_kpis
 
 # ---------------------------------------------------
 # PAGE CONFIG
@@ -19,7 +19,7 @@ st.set_page_config(
 # LOAD DATA
 # ---------------------------------------------------
 
-df = pd.read_csv("data/cleaned_crime_dataset.csv")
+df = pd.read_csv("cleaned_crime_dataset.csv")
 
 # ---------------------------------------------------
 # SIDEBAR
