@@ -45,7 +45,7 @@ st.divider()
 # MAIN LAYOUT
 # ---------------------------------------------------
 
-left, right = st.columns([5, 2], gap="large")
+left, right = st.columns([3.5,1.2], gap="medium")
 
 # ===========================
 # LEFT SIDE
@@ -59,7 +59,6 @@ with left:
     st.divider()
 
     # CHART PLACEHOLDER
-    st.subheader("📊 Analytics")
 
     show_charts(filtered_df)
 
