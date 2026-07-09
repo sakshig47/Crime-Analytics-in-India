@@ -353,56 +353,56 @@ def show_charts(filtered_df):
 
     st.subheader("📊 Crime Analytics")
 
-    # ==========================================
-    # Row 1
-    # ==========================================
+    # Create Tabs
+    tab1, tab2 = st.tabs([
+        "📊 Overview",
+        "📈 Advanced Analytics"
+    ])
 
-    col1, col2 = st.columns(2)
+    # ==========================
+    # TAB 1
+    # ==========================
 
-    with col1:
-        top_city_chart(filtered_df)
+    with tab1:
 
-    with col2:
-        weapon_chart(filtered_df)
+        col1, col2 = st.columns(2)
 
-    st.divider()
+        with col1:
+            top_city_chart(filtered_df)
 
-    # ==========================================
-    # Row 2
-    # ==========================================
+        with col2:
+            crime_type_chart(filtered_df)
 
-    col3, col4 = st.columns(2)
+        st.divider()
 
-    with col3:
-        crime_domain_case_status_chart(filtered_df)
+        col3, col4 = st.columns(2)
 
-    with col4:
-        case_status_chart(filtered_df)
+        with col3:
+            crime_domain_case_status_chart(filtered_df)
 
-    st.divider()
+        with col4:
+            crime_time_chart(filtered_df)
 
-    # ==========================================
-    # Row 3
-    # ==========================================
+    # ==========================
+    # TAB 2
+    # ==========================
 
-    col5, col6 = st.columns(2)
+    with tab2:
 
-    with col5:
-        crime_type_chart(filtered_df)
+        col5, col6 = st.columns(2)
 
-    with col6:
-        age_group_chart(filtered_df)
+        with col5:
+            weapon_chart(filtered_df)
 
-    st.divider()
+        with col6:
+            age_group_chart(filtered_df)
 
-    # ==========================================
-    # Row 4
-    # ==========================================
+        st.divider()
 
-    col7, col8 = st.columns(2)
+        col7, col8 = st.columns(2)
 
-    with col7:
-        crime_time_chart(filtered_df)
+        with col7:
+            gender_chart(filtered_df)
 
-    with col8:
-        gender_chart(filtered_df)
+        with col8:
+            case_status_chart(filtered_df)
