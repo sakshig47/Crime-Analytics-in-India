@@ -59,21 +59,6 @@ with left:
     # CHART PLACEHOLDER
     st.subheader("📊 Analytics")
 
-    chart1, chart2 = st.columns(2)
-
-    with chart1:
-        st.info("Bar Chart")
-
-    with chart2:
-        st.info("Pie Chart")
-
-    chart3, chart4 = st.columns(2)
-
-    with chart3:
-        st.info("Line Chart")
-
-    with chart4:
-        st.info("Donut Chart")
 
     st.divider()
 
