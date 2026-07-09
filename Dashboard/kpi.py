@@ -33,7 +33,7 @@ def show_kpis(filtered_df):
         filtered_df["case_closed"] == "No"
     ).sum()
 
-
+    crime_domains = filtered_df["crime_domain"].nunique()
 
     # ==========================
     # KPI Row 1
@@ -57,9 +57,9 @@ def show_kpis(filtered_df):
     )
 
     col4.metric(
-        "📋 Records Displayed",
-        len(filtered_df)
-    )
+    "📋 Crime Domains",
+    crime_domains
+)
 
     st.markdown("")
 
