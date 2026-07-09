@@ -321,7 +321,6 @@ def crime_time_chart(df):
 # =====================================================
 # CRIME TYPE TREEMAP
 # =====================================================
-
 def crime_type_chart(df):
 
     crime_df = (
@@ -338,6 +337,11 @@ def crime_type_chart(df):
         values="Cases",
         color="Cases",
         color_continuous_scale="Reds"
+    )
+
+    fig.update_traces(
+        textinfo="label+value",
+        textfont_size=14
     )
 
     fig.update_layout(
