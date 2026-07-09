@@ -117,65 +117,40 @@ def weapon_chart(df):
 # =====================================================
 # MONTHLY CRIME TREND
 # =====================================================
+def crime_domain_case_status_chart(df):
 
-def monthly_chart(df):
-
-    temp = df.copy()
-
-    temp["date_of_occurrence"] = pd.to_datetime(
-        temp["date_of_occurrence"]
-    )
-
-    trend = (
-
-        temp.groupby(
-            temp["date_of_occurrence"].dt.to_period("M")
-        )
-
+    chart_df = (
+        df.groupby(["crime_domain", "case_closed"])
         .size()
-
-        .reset_index(name="Total Crimes")
-
+        .reset_index(name="Cases")
     )
 
-    trend["date_of_occurrence"] = (
-
-        trend["date_of_occurrence"]
-
-        .astype(str)
-
-    )
-
-    fig = px.line(
-
-        trend,
-
-        x="date_of_occurrence",
-
-        y="Total Crimes",
-
-        markers=True
-
+    fig = px.bar(
+        chart_df,
+        x="crime_domain",
+        y="Cases",
+        color="case_closed",
+        barmode="stack",
+        text="Cases",
+        title="Crime Domain vs Case Status"
     )
 
     fig.update_layout(
-
-        title="📈 Monthly Crime Trend",
-
         title_x=0.5,
+        height=CHART_HEIGHT,
+        xaxis_title="Crime Domain",
+        yaxis_title="Number of Cases",
+        legend_title="Case Closed"
+    )
 
-        height=CHART_HEIGHT
-
+    fig.update_traces(
+        textposition="inside"
     )
 
     st.plotly_chart(
-
         fig,
-
         width="stretch"
-
     )
-
 
 # =====================================================
 # CASE STATUS
@@ -399,7 +374,7 @@ def show_charts(filtered_df):
     col3, col4 = st.columns(2)
 
     with col3:
-        monthly_chart(filtered_df)
+        crime_domain_case_status_chart(filtered_df)
 
     with col4:
         case_status_chart(filtered_df)
