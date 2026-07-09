@@ -4,11 +4,7 @@ import pandas as pd
 # Import Components
 from Dashboard.sidebar import sidebar
 from Dashboard.kpi import show_kpis
-<<<<<<< HEAD
 from GenAI.chartbot import ask_ai
-=======
-from Dashboard.charts import show_charts
->>>>>>> c2d5c258e34f8cbaaa9534bde7bafe96629c5f1b
 
 # ---------------------------------------------------
 # PAGE CONFIG
@@ -64,6 +60,21 @@ with left:
     # CHART PLACEHOLDER
     st.subheader("📊 Analytics")
 
+    chart1, chart2 = st.columns(2)
+
+    with chart1:
+        st.info("Bar Chart")
+
+    with chart2:
+        st.info("Pie Chart")
+
+    chart3, chart4 = st.columns(2)
+
+    with chart3:
+        st.info("Line Chart")
+
+    with chart4:
+        st.info("Donut Chart")
 
     st.divider()
 
