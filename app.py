@@ -4,6 +4,7 @@ import pandas as pd
 # Import Components
 from Dashboard.sidebar import sidebar
 from Dashboard.kpi import show_kpis
+from GenAI.chartbot import ask_ai
 
 # ---------------------------------------------------
 # PAGE CONFIG
@@ -86,16 +87,59 @@ with right:
 
     st.subheader("🤖 AI Crime Assistant")
 
-    st.info(
-        "The AI chatbot will be integrated in the next phase."
-    )
+    # Chat history persists across reruns for this session
+    if "chat_history" not in st.session_state:
+        st.session_state.chat_history = []
 
     user_question = st.text_area(
         "Ask a question",
         placeholder="Example:\nWhich city has the highest crime?",
-        height=250
+        height=150
     )
 
     if st.button("Send", use_container_width=True):
 
-        st.success("AI response will appear here.")
+        if not user_question.strip():
+            st.warning("Please type a question first.")
+        else:
+            with st.spinner("Thinking..."):
+                try:
+                    result, explanation = ask_ai(user_question)
+                    st.session_state.chat_history.append(
+                        {
+                            "question": user_question,
+                            "result": result,
+                            "explanation": explanation,
+                            "error": None,
+                        }
+                    )
+                except Exception as e:
+                    st.session_state.chat_history.append(
+                        {
+                            "question": user_question,
+                            "result": None,
+                            "explanation": None,
+                            "error": str(e),
+                        }
+                    )
+
+    st.divider()
+
+    # Show most recent answer first
+    for chat in reversed(st.session_state.chat_history):
+
+        st.markdown(f"**🧑 You:** {chat['question']}")
+
+        if chat["error"]:
+            st.error(chat["error"])
+        else:
+            result = chat["result"]
+
+            if isinstance(result, (pd.DataFrame, pd.Series)):
+                st.dataframe(result, use_container_width=True)
+            else:
+                st.success(f"**Result:** {result}")
+
+            st.markdown(f"**🤖 Explanation:** {chat['explanation']}")
+
+        st.divider()
