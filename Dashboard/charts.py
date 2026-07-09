@@ -127,20 +127,26 @@ def crime_domain_case_status_chart(df):
 
     fig = px.bar(
         chart_df,
-        x="crime_domain",
-        y="Cases",
+        x="Cases",
+        y="crime_domain",
         color="case_closed",
+        orientation="h",
         barmode="stack",
         text="Cases",
-        title="Crime Domain vs Case Status"
+        title="Crime Domain vs Case Status",
+        color_discrete_map={
+            "Yes": "#1E40AF",   # Green
+            "No": "#3B82F6"     # Red
+        }
     )
 
     fig.update_layout(
         title_x=0.5,
-        height=CHART_HEIGHT,
-        xaxis_title="Crime Domain",
-        yaxis_title="Number of Cases",
-        legend_title="Case Closed"
+        height=500,
+        xaxis_title="Number of Cases",
+        yaxis_title="Crime Domain",
+        legend_title="Case Closed",
+        yaxis=dict(categoryorder="total ascending")
     )
 
     fig.update_traces(
