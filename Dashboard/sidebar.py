@@ -6,7 +6,7 @@ def sidebar(df):
     Displays sidebar filters and returns the filtered dataframe.
     """
 
-    st.sidebar.title("🚔 Crime Analytics")
+    st.sidebar.title("🚔 Crime Data Analysis and Visualization System")
 
     st.sidebar.markdown("---")
 
