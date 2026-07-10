@@ -135,8 +135,8 @@ def crime_domain_case_status_chart(df):
         text="Cases",
         title="Crime Domain vs Case Status",
         color_discrete_map={
-            "Yes": "#1E40AF",   # Green
-            "No": "#3B82F6"     # Red
+            "Yes": "#1E40AF",   
+            "No": "#3B82F6"     
         }
     )
 
