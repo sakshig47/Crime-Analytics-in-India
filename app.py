@@ -11,84 +11,9 @@ from GenAI.chartbot import ask_ai
 # PAGE CONFIG
 # ---------------------------------------------------
 
-st.set_page_config(
-    page_title="Crime Analytics Dashboard",
-    page_icon="🚔",
-    layout="wide"
-)
-
-# ---------------------------------------------------
-# LOAD DATA
-# ---------------------------------------------------
-
-df = pd.read_csv("cleaned_crime_dataset.csv")
-
-# ---------------------------------------------------
-# SIDEBAR
-# ---------------------------------------------------
-
-filtered_df = sidebar(df)
-
-# ---------------------------------------------------
-# PAGE TITLE
-# ---------------------------------------------------
-
-st.title("🚔 Crime Analytics Dashboard")
-
-st.caption(
-    "Analyze crime trends across different cities in India."
-)
-
-st.divider()
-
-# ---------------------------------------------------
-# MAIN LAYOUT
-# ---------------------------------------------------
-
-left, right = st.columns([3.5,1.2], gap="medium")
-
-# ===========================
-# LEFT SIDE
-# ===========================
-
-with left:
-
-    # KPI SECTION
-    show_kpis(filtered_df)
-
-    st.divider()
-
-    # CHART PLACEHOLDER
-
-    show_charts(filtered_df)
-
-    st.divider()
-
-    # DATASET
-    st.subheader("📋 Crime Dataset")
-
-    st.dataframe(
-        filtered_df,
-        use_container_width=True,
-        height=500
-    )
-
-    st.download_button(
-        label="⬇ Download CSV",
-        data=filtered_df.to_csv(index=False),
-        file_name="crime_dataset.csv",
-        mime="text/csv"
-    )
-
-# ===========================
-# RIGHT SIDE
-# ===========================
-
-with right:
-
+def render_ai_assistant():
     st.subheader("🤖 AI Crime Assistant")
 
-    # Chat history persists across reruns for this session
     if "chat_history" not in st.session_state:
         st.session_state.chat_history = []
 
@@ -99,7 +24,6 @@ with right:
     )
 
     if st.button("Send", use_container_width=True):
-
         if not user_question.strip():
             st.warning("Please type a question first.")
         else:
@@ -126,9 +50,7 @@ with right:
 
     st.divider()
 
-    # Show most recent answer first
     for chat in reversed(st.session_state.chat_history):
-
         st.markdown(f"**🧑 You:** {chat['question']}")
 
         if chat["error"]:
@@ -144,3 +66,120 @@ with right:
             st.markdown(f"**🤖 Explanation:** {chat['explanation']}")
 
         st.divider()
+
+
+st.set_page_config(
+    page_title="Crime Analytics Dashboard",
+    page_icon="🚔",
+    layout="wide"
+)
+
+# ---------------------------------------------------
+# LOAD DATA
+# ---------------------------------------------------
+
+df = pd.read_csv("cleaned_crime_dataset.csv")
+
+# ---------------------------------------------------
+# SIDEBAR
+# ---------------------------------------------------
+
+filtered_df = sidebar(df)
+
+# ---------------------------------------------------
+# PAGE TITLE & STYLING
+# ---------------------------------------------------
+
+st.markdown(
+    """
+    <style>
+    .dashboard-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin: 0 0 0.2rem 0;
+        color: #0f172a;
+    }
+    .dashboard-subtitle {
+        color: #475569;
+        margin-bottom: 0.85rem;
+    }
+    div[data-testid="stMetric"] {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 14px 16px;
+        box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+    }
+    div[data-testid="stPlotlyChart"] {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 8px;
+        box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# ---------------------------------------------------
+# MAIN LAYOUT
+# ---------------------------------------------------
+
+if "show_ai_assistant" not in st.session_state:
+    st.session_state.show_ai_assistant = False
+
+st.markdown(
+    "<div class='dashboard-title'>🚔 Crime Analytics Dashboard</div>",
+    unsafe_allow_html=True
+)
+st.markdown(
+    "<div class='dashboard-subtitle'>Analyze crime trends across different cities in India.</div>",
+    unsafe_allow_html=True
+)
+
+# KPI SECTION
+show_kpis(filtered_df)
+
+st.divider()
+
+# CHARTS
+show_charts(filtered_df)
+
+st.divider()
+
+# DATASET
+st.subheader("📋 Crime Dataset")
+
+st.dataframe(
+    filtered_df,
+    use_container_width=True,
+    height=500
+)
+
+st.download_button(
+    label="⬇ Download CSV",
+    data=filtered_df.to_csv(index=False),
+    file_name="crime_dataset.csv",
+    mime="text/csv"
+)
+
+st.markdown("---")
+st.markdown("### 🤖 AI Crime Assistant")
+st.markdown("Ask questions about the crime dataset in natural language.")
+
+if st.button("Ask to AI Crime Assistant", use_container_width=True):
+    st.session_state.show_ai_assistant = True
+
+if st.session_state.show_ai_assistant:
+    if hasattr(st, "dialog"):
+        @st.dialog("🤖 AI Crime Assistant")
+        def ai_dialog():
+            render_ai_assistant()
+
+            if st.button("Close Assistant", use_container_width=True):
+                st.session_state.show_ai_assistant = False
+
+        ai_dialog()
+    else:
+        st.info("Open the assistant from the button above.")
